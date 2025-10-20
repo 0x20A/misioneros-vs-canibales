@@ -1,8 +1,8 @@
 import { Game } from '@/game/Game';
 import { HomePage } from '@/home/HomePage';
-import { createBrowserRouter } from 'react-router';
+import { createHashRouter } from 'react-router';
 
-export const appRouter = createBrowserRouter([
+export const appRouter = createHashRouter([
   {
     path: '/',
     element: <HomePage />,
