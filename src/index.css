@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+.principal {
+  color: #ebc477;
+}
+
+.secondary {
+  color: #304676;
+}
+
+.extra {
+  color: #72a24c;
+}
