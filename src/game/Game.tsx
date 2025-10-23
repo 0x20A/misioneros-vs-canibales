@@ -9,10 +9,8 @@ import misionero from '../assets/misionero.png';
 import { GameReducer, getInitialState } from './reducers/GameReducer';
 
 export const Game = () => {
-  // useReducer maneja todo el estado del juego
   const [state, dispatch] = useReducer(GameReducer, getInitialState());
 
-  // modal de reglas
   const [openModal, setOpenModal] = useState(false);
 
   // ref a las islas y barco en el DOM
@@ -46,7 +44,6 @@ export const Game = () => {
     const personajeX = info.point.x;
     const personajeY = info.point.y;
 
-    // ubicacion si se suelta sobre el barco
     const enBarco =
       personajeX >= barcoRect.left &&
       personajeX <= barcoRect.right &&
@@ -54,7 +51,6 @@ export const Game = () => {
       personajeY <= barcoRect.bottom;
 
     if (enBarco) {
-      // maximo 2 personajes en barco
       const persEnBarco = state.personajes.filter(
         (p) => p.ubicacion === 'barco'
       ).length;
@@ -96,6 +92,11 @@ export const Game = () => {
       <Cloud className='top-10 left-1/3' size='large' animation='float' />
       <Cloud className='top-10 right-1/3' size='small' animation='float' />
       <Cloud className='top-20 right-20' size='large' animation='float-slow' />
+
+      {/* movimientos */}
+      <div className='text-5xl text-amber-600 mt-10 text-center'>
+        {state.movimientos}
+      </div>
 
       {/* isla izquierda*/}
       <div

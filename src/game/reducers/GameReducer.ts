@@ -7,14 +7,15 @@ export interface Personaje {
   ubicacion: Ubicacion;
 }
 
-// state: estado del juego
+// state
 export interface GameState {
   estadoJuego: 'jugando' | 'victoria' | 'derrota';
   posicionBarco: 'izquierda' | 'derecha';
+  movimientos: number;
   personajes: Personaje[];
 }
 
-// actions: acciones del juego
+// actions
 export type GameAction =
   | {
       type: 'MOVER_PERSONAJE';
@@ -28,6 +29,7 @@ export const getInitialState = (): GameState => {
   return {
     estadoJuego: 'jugando',
     posicionBarco: 'izquierda',
+    movimientos: 0,
     personajes: [
       {
         id: 'c1',
@@ -62,8 +64,6 @@ export const getInitialState = (): GameState => {
     ],
   };
 };
-
-// funciones helpers
 
 // contador de personajes isla + barco
 const countPersonajes = (
@@ -142,18 +142,15 @@ export const GameReducer = (
     }
 
     case 'MOVER_BARCO': {
-      // verificar que haya al menos un personaje en el barco
       const pBarco = state.personajes.filter((p) => p.ubicacion === 'barco');
 
       if (pBarco.length === 0) {
         return state;
       }
 
-      // cambiar la posicion del barco
       const nuevaPosicionBarco =
         state.posicionBarco === 'izquierda' ? 'derecha' : 'izquierda';
 
-      // verificar victoria/derrota despues de mover el barco
       const derrota = checkDerrota(state.personajes, nuevaPosicionBarco);
       const victoria = checkVictoria(state.personajes);
 
@@ -163,6 +160,7 @@ export const GameReducer = (
         ...state,
         posicionBarco: nuevaPosicionBarco,
         estadoJuego: newState,
+        movimientos: state.movimientos + 1,
       };
     }
 
